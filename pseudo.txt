@@ -1,0 +1,39 @@
+Book info displayed in an HTML table.
+If no books are in the library, display empty message.
+Table includes all book info plus a Remove Book button.
+    - Remove Book removes book from array, updates table.
+Top of page has an Add New Book button that displays a form (dialog?)
+    - Add New Book triggers table update.
+
+
+FUNCTIONS
+- Book(title, author, pages)
+    - contructor
+    - creates book
+
+- addBookToLibrary(title, author, pages)
+    - checks if book is already in the library
+    - calls Book() to create a new book
+    - adds book to library
+
+- displayBooks()
+    - iterates through library, displays book properties in table
+    - creates table elements as needed
+        - document.createElement?
+
+- newBook()
+    - attached to New Book button
+    - collects form info
+        - use event.preventDefault() on submit button
+    - calls addBookToLibrary()
+
+- removeBook()
+    - attached to Remove Book button on each row
+    - removes table rows as needed
+    - if the library is empty, display message
+
+
+EVENT LISTENERS
+- New Book button at top of page
+- Remove Book button on each book row
+- read/unread column is a toggle to change read status
