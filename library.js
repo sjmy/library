@@ -31,8 +31,25 @@ function addBookToLibrary(title, author, pages) {
         };
     };
     
-    new_book = new Book(title, author, pages);
+    const new_book = new Book(title, author, pages);
     myLibrary.push(new_book);
+    displayBooks();
+};
+
+function displayBooks() {
+    const tblBody = document.querySelector("tbody");
+
+    for (i = 0; i < 2; i++) {
+        const row = document.createElement("tr");
+
+        for (j = 0; j < 5; j++) {
+            const cell = document.createElement("td");
+            const book = myLibrary[i];
+            row.appendChild(book.title);
+        };
+
+        tblBody.appendChild(row);
+    };
 };
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);

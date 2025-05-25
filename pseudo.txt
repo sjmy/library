@@ -15,6 +15,7 @@ FUNCTIONS
     - checks if book is already in the library
     - calls Book() to create a new book
     - adds book to library
+    - calls displayBooks()
 
 - displayBooks()
     - iterates through library, displays book properties in table
