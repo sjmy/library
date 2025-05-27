@@ -11,7 +11,7 @@
     <table>
         <thead>
             <caption>
-                Library Books
+                <h2>Library Books</h2>
             </caption>
             <tr>
                 <th>Title</th>
@@ -32,6 +32,7 @@
     <p>
         <form>
             <dialog class="addNewBook">
+                <h3>Add New Book</h3>
                 <p>
                     <label for="bookTitle">Title:</label>
                     <br>
@@ -54,7 +55,7 @@
                     <input type="radio" id="bookUnread" name="bookIsRead" value="Unread" checked>
                     <label for="bookUnread">Unread</label>
                 </p>
-                <div>
+                <div class="addNewBookButtons">
                     <button class="confirmButton" value="default">Confirm</button>
                     <button class="cancelButton" value="cancel" formmethod="dialog">Cancel</button>
                 </div>

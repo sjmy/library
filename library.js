@@ -98,11 +98,6 @@ function startDeleteButtonListener() {
         
         delButton.addEventListener("click", (e) => {
             if (e.target.dataset.id == delButton.dataset.id) {
-                // Add an are you sure? dialog
-
-
-
-
                 const row = e.target.parentElement.parentElement;
                 deleteBookFromLibrary(e.target.dataset.id);
                 row.remove();
@@ -157,8 +152,7 @@ cancelAddNewBook.addEventListener("click", () => {
 });
 
 
-
+// Initialize the library with a few books
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
 addBookToLibrary("Somehow I Manage", "Michael Scott", 31);
 addBookToLibrary("Case Closed, Jake Open", "Jake Peralta", 99);
-console.table(myLibrary);
