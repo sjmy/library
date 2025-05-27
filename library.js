@@ -5,7 +5,7 @@ const confirmAddNewBook = document.querySelector(".confirmButton")
 const cancelAddNewBook = document.querySelector(".cancelButton");
 
 // Constructor
-function Book(title, author, pages, isRead = "Unread") {
+function Book(title, author, pages, isRead) {
     // This is a way of checking to see if the variable was declared using new.
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
@@ -18,7 +18,7 @@ function Book(title, author, pages, isRead = "Unread") {
     this.id = crypto.randomUUID();
 };
 
-function addBookToLibrary(title, author, pages) {
+function addBookToLibrary(title, author, pages, isRead = "Unread") {
     // Is there a better way to search for array objects? myLibrary.includes()?
     for (n = 0; n < myLibrary.length; n++) {
         if (myLibrary[n].title == title && myLibrary[n].author == author) {
@@ -27,7 +27,7 @@ function addBookToLibrary(title, author, pages) {
         };
     };
     
-    const newBook = new Book(title, author, pages);
+    const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
     displayBooks();
 };
@@ -82,14 +82,10 @@ confirmAddNewBook.addEventListener("click", (e) => {
     const bookTitle = document.querySelector("#bookTitle").value;
     const bookAuthor = document.querySelector("#bookAuthor").value;
     const bookPages = document.querySelector("#bookPages").value;
-    // const bookIsRead = document.querySelector("#bookIsRead").value;
+    const bookIsRead = document.querySelector("input[type=radio]:checked").value;
 
-    addBookToLibrary(bookTitle, bookAuthor, bookPages);
+    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookIsRead);
     
-    console.log(bookTitle);
-    console.log(bookAuthor);
-    console.log(bookPages);
-    // console.log(bookIsRead);
     e.preventDefault();
 });
 
