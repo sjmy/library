@@ -5,7 +5,7 @@ const showAddNewBookDialog = document.querySelector(".addButton");
 const confirmAddNewBook = document.querySelector(".confirmButton")
 const cancelAddNewBook = document.querySelector(".cancelButton");
 
-// Constructor
+// Book Constructor
 function Book(title, author, pages, isRead) {
     // This is a way of checking to see if the variable was declared using new.
     if (!new.target) {
@@ -19,6 +19,7 @@ function Book(title, author, pages, isRead) {
     this.id = crypto.randomUUID();
 };
 
+// Checks if book exists in myLibrary (name and author match), if not creates book
 function addBookToLibrary(title, author, pages, isRead = "Unread") {
     // Is there a better way to search for array objects? myLibrary.includes()?
     for (n = 0; n < myLibrary.length; n++) {
@@ -36,6 +37,7 @@ function addBookToLibrary(title, author, pages, isRead = "Unread") {
     startDeleteButtonListener();
 };
 
+// Deletes book from myLibrary
 function deleteBookFromLibrary(id) {
     for (n = 0; n < myLibrary.length; n++) {
         if (myLibrary[n].id == id) {
@@ -44,6 +46,7 @@ function deleteBookFromLibrary(id) {
     };
 };
 
+// Creates and displays the HTML table
 function displayBooks() {
     const tblBody = document.querySelector("tbody");
 
@@ -86,10 +89,12 @@ function startDeleteButtonListener() {
     };
 };
 
+// "Add a new book!" button opens dialog when clicked
 showAddNewBookDialog.addEventListener("click", () => {
     addNewBookDialog.showModal();
 });
 
+// "Confirm" button sends book data to the library, closes dialog and resets the form when clicked
 confirmAddNewBook.addEventListener("click", (e) => {
     const bookTitle = document.querySelector("#bookTitle").value;
     const bookAuthor = document.querySelector("#bookAuthor").value;
@@ -103,6 +108,7 @@ confirmAddNewBook.addEventListener("click", (e) => {
     addNewBookForm.reset();
 });
 
+// "Cancel" button closes dialog and resets the form when clicked
 cancelAddNewBook.addEventListener("click", () => {
     addNewBookDialog.close();
     addNewBookForm.reset();
