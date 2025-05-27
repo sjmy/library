@@ -16,6 +16,13 @@ function Book(title, author, pages, isRead) {
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
+    this.toggleIsRead = function() {
+        if (this.isRead == "Unread") {
+            this.isRead = "Read";
+        } else {
+            this.isRead = "Unread";
+        };
+    };
     this.id = crypto.randomUUID();
 };
 
@@ -32,9 +39,6 @@ function addBookToLibrary(title, author, pages, isRead = "Unread") {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
     displayBooks();
-
-    // The delete button event listener only starts once there are books in the library
-    startDeleteButtonListener();
 };
 
 // Deletes book from myLibrary
@@ -62,11 +66,24 @@ function displayBooks() {
 
         // Create a new cell within the new row for each book property
         for (const property in myLibrary[book]) {
+            // Ignore toggleIsRead function, we don't want to display it
+            if (property == "toggleIsRead") {
+                continue;
+            // Add a button for the isRead property so the value can be toggled
+            } else if (property == "isRead") {
+                newRow.insertCell().innerHTML = `<button type="button" class="toggleIsRead" data-id="${myLibrary[book].id}">${myLibrary[book][property]}</button>`;
+                continue;
+            };
+
             newRow.insertCell().textContent = myLibrary[book][property];
         };
 
-        newRow.insertCell().innerHTML = `<button type="button" class="deleteRow" data-id="${myLibrary[book].id}">Delete</button>`
+        newRow.insertCell().innerHTML = `<button type="button" class="deleteRow" data-id="${myLibrary[book].id}">Delete</button>`;
     };
+
+    // The delete button and read/unread event listeners only starts once there are books in the library
+    startDeleteButtonListener();
+    startToggleIsReadButtonListener();
 };
 
 
@@ -77,13 +94,38 @@ function startDeleteButtonListener() {
     const deleteButtons = document.querySelectorAll(".deleteRow");
 
     for (n = 0; n < deleteButtons.length; n++) {
-        const button = deleteButtons[n];
+        const delButton = deleteButtons[n];
         
-        button.addEventListener("click", (e) => {
-            if (e.target.dataset.id == button.dataset.id) {
+        delButton.addEventListener("click", (e) => {
+            if (e.target.dataset.id == delButton.dataset.id) {
+                // Add an are you sure? dialog
+
+
+
+
                 const row = e.target.parentElement.parentElement;
                 deleteBookFromLibrary(e.target.dataset.id);
                 row.remove();
+            };
+        });
+    };
+};
+
+// The read/unread event listener only starts once there are books in the library
+function startToggleIsReadButtonListener() {
+    const toggleIsReadButtons = document.querySelectorAll(".toggleIsRead");
+
+    for (n = 0; n < toggleIsReadButtons.length; n++) {
+        const readButton = toggleIsReadButtons[n];
+
+        readButton.addEventListener("click", (e) => {
+            if (e.target.dataset.id == readButton.dataset.id) {
+                for (n = 0; n < myLibrary.length; n++) {
+                    if (e.target.dataset.id == myLibrary[n].id) {
+                        myLibrary[n].toggleIsRead();
+                        displayBooks();
+                    };
+                };
             };
         });
     };
