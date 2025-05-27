@@ -1,4 +1,7 @@
+// All Books are stored in the myLibrary array
 const myLibrary = [];
+
+// Button and form dialog variables for event listeners
 const addNewBookDialog = document.querySelector(".addNewBook");
 const addNewBookForm = document.querySelector("form");
 const showAddNewBookDialog = document.querySelector(".addButton");
