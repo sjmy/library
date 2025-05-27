@@ -19,6 +19,7 @@
                 <th>Pages</th>
                 <th>Read?</th>
                 <th>ID</th>
+                <th>Delete?</th>
             </tr>
         </thead>
         <tbody>
@@ -29,34 +30,36 @@
         </tfoot>
     </table>
     <p>
-        <dialog class="addNewBook">
-            <p>
-                <label for="bookTitle">Title:</label>
-                <br>
-                <input type="text" id="bookTitle" name="bookTitle">
-            </p>
-            <p>
-                <label for="bookAuthor">Author:</label>
-                <br>
-                <input type="text" id="bookAuthor" name="bookAuthor">
-            </p>
-            <p>
-                <label for="bookPages">Number of pages:</label>
-                <br>
-                <input type="number" id="bookPages" name="bookPages">
-            </p>
-            <p>
-                <input type="radio" id="bookRead" name="bookIsRead" value="Read">
-                <label for="bookRead">Read</label>
-                <br>
-                <input type="radio" id="bookUnread" name="bookIsRead" value="Unread" checked>
-                <label for="bookUnread">Unread</label>
-            </p>
-            <div>
-                <button class="confirmButton" value="default">Confirm</button>
-                <button class="cancelButton" value="cancel" formmethod="dialog">Cancel</button>
-            </div>
-        </dialog>
+        <form>
+            <dialog class="addNewBook">
+                <p>
+                    <label for="bookTitle">Title:</label>
+                    <br>
+                    <input type="text" id="bookTitle" name="bookTitle">
+                </p>
+                <p>
+                    <label for="bookAuthor">Author:</label>
+                    <br>
+                    <input type="text" id="bookAuthor" name="bookAuthor">
+                </p>
+                <p>
+                    <label for="bookPages">Number of pages:</label>
+                    <br>
+                    <input type="number" id="bookPages" name="bookPages">
+                </p>
+                <p>
+                    <input type="radio" id="bookRead" name="bookIsRead" value="Read">
+                    <label for="bookRead">Read</label>
+                    <br>
+                    <input type="radio" id="bookUnread" name="bookIsRead" value="Unread" checked>
+                    <label for="bookUnread">Unread</label>
+                </p>
+                <div>
+                    <button class="confirmButton" value="default">Confirm</button>
+                    <button class="cancelButton" value="cancel" formmethod="dialog">Cancel</button>
+                </div>
+            </dialog>
+        </form>
         <button class="addButton">Add a new book!</button>
     </p>
 </body>

@@ -1,5 +1,6 @@
 const myLibrary = [];
 const addNewBookDialog = document.querySelector(".addNewBook");
+const addNewBookForm = document.querySelector("form");
 const showAddNewBookDialog = document.querySelector(".addButton");
 const confirmAddNewBook = document.querySelector(".confirmButton")
 const cancelAddNewBook = document.querySelector(".cancelButton");
@@ -30,26 +31,18 @@ function addBookToLibrary(title, author, pages, isRead = "Unread") {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
     displayBooks();
+
+    // The delete button event listener only starts once there are books in the library
+    startDeleteButtonListener();
 };
 
-// function checkID(newID) {
-//     // Check to see if the book is already in the array
-//     // Currently not working
-
-//     const tblBody = document.querySelector("tbody");
-    
-//     for (i = 0; i < tblBody.rows.length; i++) {
-//         const row = tblBody.rows[i];
-
-//         for (j = 0; j < row.cells.length; j++) {
-//             console.log(row.cells[j].textContent);
-//             console.log(newID);
-//             if (row.cells[j].textContent == newID) {
-//                 return;
-//             };
-//         };
-//     };
-// };
+function deleteBookFromLibrary(id) {
+    for (n = 0; n < myLibrary.length; n++) {
+        if (myLibrary[n].id == id) {
+            myLibrary.splice(n, 1);
+        };
+    };
+};
 
 function displayBooks() {
     const tblBody = document.querySelector("tbody");
@@ -68,11 +61,30 @@ function displayBooks() {
         for (const property in myLibrary[book]) {
             newRow.insertCell().textContent = myLibrary[book][property];
         };
+
+        newRow.insertCell().innerHTML = `<button type="button" class="deleteRow" data-id="${myLibrary[book].id}">Delete</button>`
     };
 };
 
 
 // Event Listeners
+
+// The delete button event listener only starts once there are books in the library
+function startDeleteButtonListener() {
+    const deleteButtons = document.querySelectorAll(".deleteRow");
+
+    for (n = 0; n < deleteButtons.length; n++) {
+        const button = deleteButtons[n];
+        
+        button.addEventListener("click", (e) => {
+            if (e.target.dataset.id == button.dataset.id) {
+                const row = e.target.parentElement.parentElement;
+                deleteBookFromLibrary(e.target.dataset.id);
+                row.remove();
+            };
+        });
+    };
+};
 
 showAddNewBookDialog.addEventListener("click", () => {
     addNewBookDialog.showModal();
@@ -87,10 +99,13 @@ confirmAddNewBook.addEventListener("click", (e) => {
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookIsRead);
     
     e.preventDefault();
+    addNewBookDialog.close();
+    addNewBookForm.reset();
 });
 
 cancelAddNewBook.addEventListener("click", () => {
     addNewBookDialog.close();
+    addNewBookForm.reset();
 });
 
 
