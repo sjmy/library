@@ -8,25 +8,23 @@ const showAddNewBookDialog = document.querySelector(".addButton");
 const confirmAddNewBook = document.querySelector(".confirmButton")
 const cancelAddNewBook = document.querySelector(".cancelButton");
 
-// Book Constructor
-function Book(title, author, pages, isRead) {
-    // This is a way of checking to see if the variable was declared using new.
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
+// Book class
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
+        this.id = crypto.randomUUID();
     };
-
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    this.toggleIsRead = function() {
+    
+    toggleIsRead() {
         if (this.isRead == "Unread") {
             this.isRead = "Read";
         } else {
             this.isRead = "Unread";
         };
     };
-    this.id = crypto.randomUUID();
 };
 
 // Checks if book exists in myLibrary (name and author match), if not creates book
