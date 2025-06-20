@@ -5,153 +5,151 @@ const myLibrary = [];
 const addNewBookDialog = document.querySelector(".addNewBook");
 const addNewBookForm = document.querySelector("form");
 const showAddNewBookDialog = document.querySelector(".addButton");
-const confirmAddNewBook = document.querySelector(".confirmButton")
+const confirmAddNewBook = document.querySelector(".confirmButton");
 const cancelAddNewBook = document.querySelector(".cancelButton");
 
 // Book class
 class Book {
-    constructor(title, author, pages, isRead) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.isRead = isRead;
-        this.id = crypto.randomUUID();
-    };
-    
-    toggleIsRead() {
-        if (this.isRead == "Unread") {
-            this.isRead = "Read";
-        } else {
-            this.isRead = "Unread";
-        };
-    };
-};
+  constructor(title, author, pages, isRead) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+    this.id = crypto.randomUUID();
+  }
+
+  toggleIsRead() {
+    if (this.isRead == "Unread") {
+      this.isRead = "Read";
+    } else {
+      this.isRead = "Unread";
+    }
+  }
+}
 
 // Checks if book exists in myLibrary (name and author match), if not creates book
 function addBookToLibrary(title, author, pages, isRead = "Unread") {
-    // Is there a better way to search for array objects? myLibrary.includes()?
-    for (n = 0; n < myLibrary.length; n++) {
-        if (myLibrary[n].title == title && myLibrary[n].author == author) {
-            console.log("This book is already in the library!");
-            return;
-        };
-    };
-    
-    const newBook = new Book(title, author, pages, isRead);
-    myLibrary.push(newBook);
-    displayBooks();
-};
+  // Is there a better way to search for array objects? myLibrary.includes()?
+  for (n = 0; n < myLibrary.length; n++) {
+    if (myLibrary[n].title == title && myLibrary[n].author == author) {
+      console.log("This book is already in the library!");
+      return;
+    }
+  }
+
+  const newBook = new Book(title, author, pages, isRead);
+  myLibrary.push(newBook);
+  displayBooks();
+}
 
 // Deletes book from myLibrary
 function deleteBookFromLibrary(id) {
-    for (n = 0; n < myLibrary.length; n++) {
-        if (myLibrary[n].id == id) {
-            myLibrary.splice(n, 1);
-        };
-    };
-};
+  for (n = 0; n < myLibrary.length; n++) {
+    if (myLibrary[n].id == id) {
+      myLibrary.splice(n, 1);
+    }
+  }
+}
 
 // Creates and displays the HTML table
 function displayBooks() {
-    const tblBody = document.querySelector("tbody");
+  const tblBody = document.querySelector("tbody");
 
-    // Deletes all the table rows to ensure no duplicates are displayed
-    const tblBodyRows = tblBody.rows.length;
-    for (r = 1; r < tblBodyRows; r++) {
-        tblBody.deleteRow(1);
-    };
+  // Deletes all the table rows to ensure no duplicates are displayed
+  const tblBodyRows = tblBody.rows.length;
+  for (r = 1; r < tblBodyRows; r++) {
+    tblBody.deleteRow(1);
+  }
 
-    // Create a new table row for each book in the library
-    for (const book in myLibrary) {
-        const newRow = tblBody.insertRow();
+  // Create a new table row for each book in the library
+  for (const book in myLibrary) {
+    const newRow = tblBody.insertRow();
 
-        // Create a new cell within the new row for each book property
-        for (const property in myLibrary[book]) {
-            // Ignore toggleIsRead function, we don't want to display it
-            if (property == "toggleIsRead") {
-                continue;
-            // Add a button for the isRead property so the value can be toggled
-            } else if (property == "isRead") {
-                newRow.insertCell().innerHTML = `<button type="button" class="toggleIsRead" data-id="${myLibrary[book].id}">${myLibrary[book][property]}</button>`;
-                continue;
-            };
+    // Create a new cell within the new row for each book property
+    for (const property in myLibrary[book]) {
+      // Ignore toggleIsRead function, we don't want to display it
+      if (property == "toggleIsRead") {
+        continue;
+        // Add a button for the isRead property so the value can be toggled
+      } else if (property == "isRead") {
+        newRow.insertCell().innerHTML = `<button type="button" class="toggleIsRead" data-id="${myLibrary[book].id}">${myLibrary[book][property]}</button>`;
+        continue;
+      }
 
-            newRow.insertCell().textContent = myLibrary[book][property];
-        };
+      newRow.insertCell().textContent = myLibrary[book][property];
+    }
 
-        newRow.insertCell().innerHTML = `<button type="button" class="deleteRow" data-id="${myLibrary[book].id}">Delete</button>`;
-    };
+    newRow.insertCell().innerHTML = `<button type="button" class="deleteRow" data-id="${myLibrary[book].id}">Delete</button>`;
+  }
 
-    // The delete button and read/unread event listeners only starts once there are books in the library
-    startDeleteButtonListener();
-    startToggleIsReadButtonListener();
-};
-
+  // The delete button and read/unread event listeners only starts once there are books in the library
+  startDeleteButtonListener();
+  startToggleIsReadButtonListener();
+}
 
 // Event Listeners
 
 // The delete button event listener only starts once there are books in the library
 function startDeleteButtonListener() {
-    const deleteButtons = document.querySelectorAll(".deleteRow");
+  const deleteButtons = document.querySelectorAll(".deleteRow");
 
-    for (n = 0; n < deleteButtons.length; n++) {
-        const delButton = deleteButtons[n];
-        
-        delButton.addEventListener("click", (e) => {
-            if (e.target.dataset.id == delButton.dataset.id) {
-                const row = e.target.parentElement.parentElement;
-                deleteBookFromLibrary(e.target.dataset.id);
-                row.remove();
-            };
-        });
-    };
-};
+  for (n = 0; n < deleteButtons.length; n++) {
+    const delButton = deleteButtons[n];
+
+    delButton.addEventListener("click", (e) => {
+      if (e.target.dataset.id == delButton.dataset.id) {
+        const row = e.target.parentElement.parentElement;
+        deleteBookFromLibrary(e.target.dataset.id);
+        row.remove();
+      }
+    });
+  }
+}
 
 // The read/unread event listener only starts once there are books in the library
 function startToggleIsReadButtonListener() {
-    const toggleIsReadButtons = document.querySelectorAll(".toggleIsRead");
+  const toggleIsReadButtons = document.querySelectorAll(".toggleIsRead");
 
-    for (n = 0; n < toggleIsReadButtons.length; n++) {
-        const readButton = toggleIsReadButtons[n];
+  for (n = 0; n < toggleIsReadButtons.length; n++) {
+    const readButton = toggleIsReadButtons[n];
 
-        readButton.addEventListener("click", (e) => {
-            if (e.target.dataset.id == readButton.dataset.id) {
-                for (n = 0; n < myLibrary.length; n++) {
-                    if (e.target.dataset.id == myLibrary[n].id) {
-                        myLibrary[n].toggleIsRead();
-                        displayBooks();
-                    };
-                };
-            };
-        });
-    };
-};
+    readButton.addEventListener("click", (e) => {
+      if (e.target.dataset.id == readButton.dataset.id) {
+        for (n = 0; n < myLibrary.length; n++) {
+          if (e.target.dataset.id == myLibrary[n].id) {
+            myLibrary[n].toggleIsRead();
+            displayBooks();
+          }
+        }
+      }
+    });
+  }
+}
 
 // "Add a new book!" button opens dialog when clicked
 showAddNewBookDialog.addEventListener("click", () => {
-    addNewBookDialog.showModal();
+  addNewBookDialog.showModal();
 });
 
 // "Confirm" button sends book data to the library, closes dialog and resets the form when clicked
 confirmAddNewBook.addEventListener("click", (e) => {
-    const bookTitle = document.querySelector("#bookTitle").value;
-    const bookAuthor = document.querySelector("#bookAuthor").value;
-    const bookPages = document.querySelector("#bookPages").value;
-    const bookIsRead = document.querySelector("input[type=radio]:checked").value;
+  const bookTitle = document.querySelector("#bookTitle").value;
+  const bookAuthor = document.querySelector("#bookAuthor").value;
+  const bookPages = document.querySelector("#bookPages").value;
+  const bookIsRead = document.querySelector("input[type=radio]:checked").value;
 
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookIsRead);
-    
-    e.preventDefault();
-    addNewBookDialog.close();
-    addNewBookForm.reset();
+  addBookToLibrary(bookTitle, bookAuthor, bookPages, bookIsRead);
+
+  e.preventDefault();
+  addNewBookDialog.close();
+  addNewBookForm.reset();
 });
 
 // "Cancel" button closes dialog and resets the form when clicked
 cancelAddNewBook.addEventListener("click", () => {
-    addNewBookDialog.close();
-    addNewBookForm.reset();
+  addNewBookDialog.close();
+  addNewBookForm.reset();
 });
-
 
 // Initialize the library with a few books
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);

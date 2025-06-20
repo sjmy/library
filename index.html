@@ -1,67 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <script type="text/javascript" src="library.js" defer></script>
-    <link rel="stylesheet" href="styles.css" defer>
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" defer />
+  </head>
+  <body>
     <table>
-        <thead>
-            <caption>
-                <h2>Library Books</h2>
-            </caption>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Pages</th>
-                <th>Read?</th>
-                <th>ID</th>
-                <th>Delete?</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-        <tfoot>
-
-        </tfoot>
+      <thead>
+        <caption>
+          <h2>Library Books</h2>
+        </caption>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Pages</th>
+          <th>Read?</th>
+          <th>ID</th>
+          <th>Delete?</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot></tfoot>
     </table>
-    <p>
-        <form>
-            <dialog class="addNewBook">
-                <h3>Add New Book</h3>
-                <p>
-                    <label for="bookTitle">Title:</label>
-                    <br>
-                    <input type="text" id="bookTitle" name="bookTitle">
-                </p>
-                <p>
-                    <label for="bookAuthor">Author:</label>
-                    <br>
-                    <input type="text" id="bookAuthor" name="bookAuthor">
-                </p>
-                <p>
-                    <label for="bookPages">Number of pages:</label>
-                    <br>
-                    <input type="number" id="bookPages" name="bookPages">
-                </p>
-                <p>
-                    <input type="radio" id="bookRead" name="bookIsRead" value="Read">
-                    <label for="bookRead">Read</label>
-                    <br>
-                    <input type="radio" id="bookUnread" name="bookIsRead" value="Unread" checked>
-                    <label for="bookUnread">Unread</label>
-                </p>
-                <div class="addNewBookButtons">
-                    <button class="confirmButton" value="default">Confirm</button>
-                    <button class="cancelButton" value="cancel" formmethod="dialog">Cancel</button>
-                </div>
-            </dialog>
-        </form>
-        <button class="addButton">Add a new book!</button>
-    </p>
-</body>
+    <p></p>
+    <form>
+      <dialog class="addNewBook">
+        <h3>Add New Book</h3>
+        <p>
+          <label for="bookTitle">Title:</label>
+          <br />
+          <input type="text" id="bookTitle" name="bookTitle" />
+        </p>
+        <p>
+          <label for="bookAuthor">Author:</label>
+          <br />
+          <input type="text" id="bookAuthor" name="bookAuthor" />
+        </p>
+        <p>
+          <label for="bookPages">Number of pages:</label>
+          <br />
+          <input type="number" id="bookPages" name="bookPages" />
+        </p>
+        <p>
+          <input type="radio" id="bookRead" name="bookIsRead" value="Read" />
+          <label for="bookRead">Read</label>
+          <br />
+          <input
+            type="radio"
+            id="bookUnread"
+            name="bookIsRead"
+            value="Unread"
+            checked
+          />
+          <label for="bookUnread">Unread</label>
+        </p>
+        <div class="addNewBookButtons">
+          <button class="confirmButton" value="default">Confirm</button>
+          <button class="cancelButton" value="cancel" formmethod="dialog">
+            Cancel
+          </button>
+        </div>
+      </dialog>
+    </form>
+    <button class="addButton">Add a new book!</button>
+  </body>
 </html>
