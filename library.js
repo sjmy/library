@@ -126,6 +126,16 @@ function startToggleIsReadButtonListener() {
   }
 }
 
+// Write a function to check each constraint individually. Call them on eventListeners.
+// Example, bookTitle needs a minimum length. checkBookTitle() validates that.
+// If it's valid, bookTitle.setCustomValidity(""). Else, bookTitle.setCustomValidity("The book title must be at least one character long"):
+//
+// const bookTitle = document.querySelector("#bookTitle");
+// bookTitle.oninput = checkBookTitle;
+function checkBookTitle() {
+  const bookTitle = document.querySelector("#bookTitle");
+}
+
 // "Add a new book!" button opens dialog when clicked
 showAddNewBookDialog.addEventListener("click", () => {
   addNewBookDialog.showModal();
@@ -133,12 +143,22 @@ showAddNewBookDialog.addEventListener("click", () => {
 
 // "Confirm" button sends book data to the library, closes dialog and resets the form when clicked
 confirmAddNewBook.addEventListener("click", (e) => {
-  const bookTitle = document.querySelector("#bookTitle").value;
-  const bookAuthor = document.querySelector("#bookAuthor").value;
-  const bookPages = document.querySelector("#bookPages").value;
-  const bookIsRead = document.querySelector("input[type=radio]:checked").value;
+  const form = document.querySelector("form");
+  const bookTitle = document.querySelector("#bookTitle");
+  const bookAuthor = document.querySelector("#bookAuthor");
+  const bookPages = document.querySelector("#bookPages");
+  const bookIsRead = document.querySelector("input[type=radio]:checked");
 
-  addBookToLibrary(bookTitle, bookAuthor, bookPages, bookIsRead);
+  if (!form.checkValidity()) {
+    console.log("not valid");
+  }
+
+  addBookToLibrary(
+    bookTitle.value,
+    bookAuthor.value,
+    bookPages.value,
+    bookIsRead.value
+  );
 
   e.preventDefault();
   addNewBookDialog.close();

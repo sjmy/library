@@ -32,17 +32,35 @@
         <p>
           <label for="bookTitle">Title:</label>
           <br />
-          <input type="text" id="bookTitle" name="bookTitle" />
+          <input
+            type="text"
+            id="bookTitle"
+            name="bookTitle"
+            minlength="1"
+            required
+          />
         </p>
         <p>
           <label for="bookAuthor">Author:</label>
           <br />
-          <input type="text" id="bookAuthor" name="bookAuthor" />
+          <input
+            type="text"
+            id="bookAuthor"
+            name="bookAuthor"
+            minlength="1"
+            required
+          />
         </p>
         <p>
           <label for="bookPages">Number of pages:</label>
           <br />
-          <input type="number" id="bookPages" name="bookPages" />
+          <input
+            type="number"
+            id="bookPages"
+            name="bookPages"
+            min="1"
+            required
+          />
         </p>
         <p>
           <input type="radio" id="bookRead" name="bookIsRead" value="Read" />
