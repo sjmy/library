@@ -130,8 +130,9 @@ function startToggleIsReadButtonListener() {
   }
 }
 
-// Write a function to check each constraint individually. Call them on eventListeners.
-// Example, bookTitle needs a minimum length. checkBookTitle() validates that.
+// Form Validation
+// bookTitle, bookAuthor, and bookPages each have a function to check each constraint individually.
+// Functions are attached to appropriate eventListeners.
 
 function checkBookTitle() {
   if (bookTitle.validity.valueMissing) {
