@@ -8,6 +8,10 @@ const showAddNewBookDialog = document.querySelector(".addButton");
 const confirmAddNewBook = document.querySelector(".confirmButton");
 const cancelAddNewBook = document.querySelector(".cancelButton");
 
+const bookTitle = document.querySelector("#bookTitle");
+const bookAuthor = document.querySelector("#bookAuthor");
+const bookPages = document.querySelector("#bookPages");
+
 // Book class
 class Book {
   constructor(title, author, pages, isRead) {
@@ -128,13 +132,48 @@ function startToggleIsReadButtonListener() {
 
 // Write a function to check each constraint individually. Call them on eventListeners.
 // Example, bookTitle needs a minimum length. checkBookTitle() validates that.
-// If it's valid, bookTitle.setCustomValidity(""). Else, bookTitle.setCustomValidity("The book title must be at least one character long"):
-//
-// const bookTitle = document.querySelector("#bookTitle");
-// bookTitle.oninput = checkBookTitle;
+
 function checkBookTitle() {
-  const bookTitle = document.querySelector("#bookTitle");
+  if (bookTitle.validity.valueMissing) {
+    bookTitle.setCustomValidity(
+      "Book titles must have at least one character!"
+    );
+  } else {
+    bookTitle.setCustomValidity("");
+  }
 }
+
+function checkBookAuthor() {
+  if (bookAuthor.validity.valueMissing) {
+    bookAuthor.setCustomValidity(
+      "Authors must have at least one character in their name!"
+    );
+  } else {
+    bookAuthor.setCustomValidity("");
+  }
+}
+
+function checkBookPages() {
+  if (bookPages.validity.rangeUnderflow) {
+    bookPages.setCustomValidity("The book must have at least one page!");
+  } else if (bookPages.validity.stepMismatch) {
+    bookPages.setCustomValidity("Whole numbers only, please!");
+  } else {
+    bookPages.setCustomValidity("");
+  }
+}
+
+bookTitle.addEventListener("input", () => {
+  checkBookTitle();
+});
+
+bookAuthor.addEventListener("input", () => {
+  checkBookAuthor();
+});
+
+bookPages.addEventListener("input", () => {
+  checkBookPages();
+});
 
 // "Add a new book!" button opens dialog when clicked
 showAddNewBookDialog.addEventListener("click", () => {
@@ -143,26 +182,20 @@ showAddNewBookDialog.addEventListener("click", () => {
 
 // "Confirm" button sends book data to the library, closes dialog and resets the form when clicked
 confirmAddNewBook.addEventListener("click", (e) => {
-  const form = document.querySelector("form");
-  const bookTitle = document.querySelector("#bookTitle");
-  const bookAuthor = document.querySelector("#bookAuthor");
-  const bookPages = document.querySelector("#bookPages");
   const bookIsRead = document.querySelector("input[type=radio]:checked");
 
-  if (!form.checkValidity()) {
-    console.log("not valid");
+  if (addNewBookForm.checkValidity()) {
+    addBookToLibrary(
+      bookTitle.value,
+      bookAuthor.value,
+      bookPages.value,
+      bookIsRead.value
+    );
+
+    e.preventDefault();
+    addNewBookDialog.close();
+    addNewBookForm.reset();
   }
-
-  addBookToLibrary(
-    bookTitle.value,
-    bookAuthor.value,
-    bookPages.value,
-    bookIsRead.value
-  );
-
-  e.preventDefault();
-  addNewBookDialog.close();
-  addNewBookForm.reset();
 });
 
 // "Cancel" button closes dialog and resets the form when clicked
